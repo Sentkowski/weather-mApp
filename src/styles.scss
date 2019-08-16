@@ -1,0 +1,31 @@
+@import "reset";
+@import "./../jqvmap-master.1.5.1/jqvmap-master/dist/jqvmap.min.css";
+
+$map-h: 761px;
+$map-w: 1000px;
+
+#vmap {
+  position: relative;
+  width: $map-w;
+  height: $map-h;
+}
+
+.map-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.map-border {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: $map-w - 7px;
+  height: $map-h - 7px;
+  border: 5px solid black;
+  pointer-events: none;
+}
