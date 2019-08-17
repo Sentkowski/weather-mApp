@@ -31,6 +31,7 @@
     "dist",
     "jquery.vmap.min.exec.js",
     "jquery.vmap.europe.exec.js",
-    "webpack.dev.js"
+    "webpack.dev.js",
+    "jquery.vmap.world.exec.js"
   ]
 }
