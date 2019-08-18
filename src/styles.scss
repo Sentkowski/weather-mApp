@@ -40,7 +40,7 @@
   flex-direction: column;
   width: 350px;
   height: 450px;
-  background: #fffe;
+  background: #ffffffee;
   border-top-right-radius: 10px;
 }
 
@@ -49,25 +49,57 @@
   flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
+  transition: opacity 0.1s;
 }
 
 .app-name {
   text-align: left;
-  font: 700 32px "Crimson Pro", serif;
+  font: 700 32px "Montserrat", sans-serif;
   margin: 15px 20px 10px;
   color: rgb(27, 27, 27);
 }
 
 .app-description-heading {
-  font: 22px/1.2 "Crimson Pro", serif;
+  font: 22px/1.2 "Montserrat", sans-serif;
   margin: 0 20px 10px;
   color: rgb(27, 27, 27);
 }
 
 .app-description-text {
-  font: 18px/1.4 "Crimson Pro", serif;
+  font: 18px/1.4 "Montserrat", sans-serif;
   margin: 20px;
   justify-self: flex-end;
   color: rgb(41, 41, 41);
   text-align: center;
+}
+
+.app-description-weather-icon {
+  width: 60%;
+  align-self: center;
+}
+
+.weather-information {
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.weather-label {
+  font: 14px "Montserrat", sans-serif;
+  color: rgb(61, 61, 61);
+  font-variant: small-caps;
+  width: 100px;
+  text-align: right;
+  padding-right: 5px;
+  vertical-align: bottom;
+}
+
+.weather-data {
+  font: 22px/30px "Montserrat", sans-serif;
+  color: rgb(41, 41, 41);
+  text-align: left;
+  padding-left: 10px;
+}
+
+.weather-row {
+  height: 40px;
 }

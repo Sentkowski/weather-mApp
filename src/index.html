@@ -10,7 +10,7 @@
       src="https://code.jquery.com/jquery-3.4.1.min.js"
     ></script>
     <link
-      href="https://fonts.googleapis.com/css?family=Crimson+Pro:400,700&display=swap"
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -23,10 +23,37 @@
           <h2 class="app-description-heading">
             Curious about the weather in the remotest places?
           </h2>
+          <img
+            src="./weather-icon-set/cloudy-sun.svg"
+            alt=""
+            class="app-description-weather-icon"
+          />
           <p class="app-description-text">
             Click on any country to see what's the weather like in its capital.
           </p>
         </div>
+        <table class="weather-information">
+          <tr class="weather-row">
+            <th class="weather-city-label weather-label">city</th>
+            <td class="weather-city weather-data"></td>
+          </tr>
+          <tr class="weather-row">
+            <th class="weather-country-label weather-label">country</th>
+            <td class="weather-country weather-data"></td>
+          </tr>
+          <tr class="weather-row">
+            <th class="weather-desc-label weather-label">weather</th>
+            <td class="weather-desc weather-data"></td>
+          </tr>
+          <tr class="weather-row">
+            <th class="weather-temp-label weather-label">temperature</th>
+            <td class="weather-temp weather-data"></td>
+          </tr>
+          <tr class="weather-row">
+            <th class="weather-wind-label weather-label">wind</th>
+            <td class="weather-wind weather-data"></td>
+          </tr>
+        </table>
       </section>
     </main>
   </body>
