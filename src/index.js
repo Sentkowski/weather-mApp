@@ -7,21 +7,25 @@ import countryCodes from "./country-codes.json";
 import countryCapitals from "./country-capitals.json";
 
 const key = "0a4e47fd599ce51c32367b1db274e6b6";
+let lastMapClick = {
+  x: null,
+  y: null
+};
 
 jQuery(document).ready(function() {
   jQuery("#vmap").vectorMap({
     map: "world_en",
-    backgroundColor: "#fffff",
-    borderColor: "#000000",
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    borderColor: "#F6CE94",
     borderOpacity: 0.25,
     borderWidth: 1,
-    color: "#ffffffaa",
+    color: "#F6CE94",
     enableZoom: false,
-    hoverColor: "#ffffffdd",
+    hoverColor: "#F0865F",
     hoverOpacity: null,
     normalizeFunction: "linear",
     scaleColors: ["#b6d6ff", "#005ace"],
-    selectedColor: "#ffffff",
+    selectedColor: "#F25552",
     selectedRegions: null,
     showTooltip: true,
     onRegionSelect: handleRegionSelect
@@ -34,7 +38,7 @@ async function handleRegionSelect(e, code) {
     const extracted = extractData(weather);
     displayWeatherData(extracted);
   } catch (e) {
-    console.log(e);
+    displayError();
   }
 }
 
@@ -45,6 +49,19 @@ async function getWeatherForCapital(countryCode) {
   );
   if (!weatherReq.ok) throw new Error(response.statusText);
   return await weatherReq.json();
+}
+
+function displayError() {
+  const err = document.querySelector(".error-message");
+  err.style.display = "block";
+  placeOnClick(document.querySelector(".error-message"));
+  setTimeout(() => {
+    err.style.opacity = 0;
+    setTimeout(() => {
+      err.style.display = "none";
+      err.style.opacity = 1;
+    }, 300);
+  }, 2000);
 }
 
 function codeToCapital(code) {
@@ -64,23 +81,24 @@ function extractData(weatherObj) {
   const country = codeToCountry(weatherObj.sys.country);
   const temp = Math.round(weatherObj.main.temp) + "°C";
   const desc = weatherObj.weather[0].description;
-  const wind = weatherObj.wind.speed + " m/s";
+  const wind = "wind: " + weatherObj.wind.speed + " m/s";
   return { city, country, desc, temp, wind };
 }
 
 function displayWeatherData(data) {
-  const preselect = document.querySelector(".initial-app-text");
   const weatherContainer = document.querySelector(".weather-information");
-  if (preselect.style.display !== "none") {
-    preselect.style.opacity = 0;
-    setTimeout(() => (preselect.style.display = "none"), 100);
-  } else {
-    weatherContainer.style.opacity = 0;
-  }
-  setTimeout(() => {
+  if (weatherContainer.style.opacity == 0) {
+    placeOnClick(weatherContainer);
     putWeatherIntoHTML(data);
     weatherContainer.style.opacity = 1;
-  }, 100);
+  } else {
+    weatherContainer.style.opacity = 0;
+    setTimeout(() => {
+      putWeatherIntoHTML(data);
+      weatherContainer.style.opacity = 1;
+      placeOnClick(weatherContainer);
+    }, 100);
+  }
 }
 
 function putWeatherIntoHTML(data) {
@@ -90,3 +108,29 @@ function putWeatherIntoHTML(data) {
   document.querySelector(".weather-temp").textContent = data.temp;
   document.querySelector(".weather-wind").textContent = data.wind;
 }
+
+function placeOnClick(elem) {
+  setTimeout(() => {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    let targetX = lastMapClick.x;
+    let targetY = lastMapClick.y;
+    if (targetX + elem.offsetWidth > vw) {
+      targetX -= elem.offsetWidth;
+    }
+    if (targetY + elem.offsetHeight > vh) {
+      targetY -= elem.offsetHeight;
+    }
+    elem.style.left = targetX + "px";
+    elem.style.top = targetY + "px";
+  }, 0);
+}
+
+document.querySelector("#vmap").addEventListener("click", e => {
+  if (e.target.classList.contains("jqvmap-region")) {
+    lastMapClick = {
+      x: e.pageX,
+      y: e.pageY
+    };
+  }
+});

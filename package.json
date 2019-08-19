@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "webpack-dev-server  --config webpack.dev.js --open",
+    "start": "webpack-dev-server  --config webpack.dev.js --open --host 0.0.0.0",
     "build": "webpack --config webpack.prod.js"
   },
   "author": "Sentkowski",
