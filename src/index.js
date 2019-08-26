@@ -28,14 +28,29 @@ jQuery(document).ready(function() {
     selectedColor: "#F25552",
     selectedRegions: null,
     showTooltip: true,
-    onRegionSelect: handleRegionSelect
+    onRegionSelect: handleRegionSelect,
+    onResize: hideWeatherData
   });
+
+  intialZoom();
 });
+
+function intialZoom() {
+  if (window.innerWidth < 1000) {
+    jQuery("#vmap").vectorMap("zoomIn");
+  }
+  if (window.innerWidth < 750) {
+    jQuery("#vmap").vectorMap("zoomIn");
+  }
+  if (window.innerWidth < 500) {
+    jQuery("#vmap").vectorMap("zoomIn");
+  }
+}
 
 async function handleRegionSelect(e, code) {
   try {
     const weather = await getWeatherForCapital(code);
-    const extracted = extractData(weather);
+    const extracted = extractData(weather, code);
     displayWeatherData(extracted);
   } catch (e) {
     displayError();
@@ -52,6 +67,7 @@ async function getWeatherForCapital(countryCode) {
 }
 
 function displayError() {
+  hideWeatherData();
   const err = document.querySelector(".error-message");
   err.style.display = "block";
   placeOnClick(document.querySelector(".error-message"));
@@ -76,9 +92,9 @@ function codeToCountry(code) {
   ).country;
 }
 
-function extractData(weatherObj) {
+function extractData(weatherObj, code) {
   const city = weatherObj.name;
-  const country = codeToCountry(weatherObj.sys.country);
+  const country = codeToCountry(code);
   const temp = Math.round(weatherObj.main.temp) + "°C";
   const desc = weatherObj.weather[0].description;
   const wind = "wind: " + weatherObj.wind.speed + " m/s";
@@ -88,17 +104,31 @@ function extractData(weatherObj) {
 function displayWeatherData(data) {
   const weatherContainer = document.querySelector(".weather-information");
   if (weatherContainer.style.opacity == 0) {
-    placeOnClick(weatherContainer);
     putWeatherIntoHTML(data);
-    weatherContainer.style.opacity = 1;
+    placeOnClick(weatherContainer);
+    showWeatherData();
   } else {
-    weatherContainer.style.opacity = 0;
+    hideWeatherData();
     setTimeout(() => {
       putWeatherIntoHTML(data);
-      weatherContainer.style.opacity = 1;
       placeOnClick(weatherContainer);
+      showWeatherData();
     }, 100);
   }
+}
+
+function hideWeatherData() {
+  const weatherContainer = document.querySelector(".weather-information");
+  weatherContainer.style.opacity = 0;
+  setTimeout(() => {
+    weatherContainer.style.display = "none";
+  }, 100);
+}
+
+function showWeatherData() {
+  const weatherContainer = document.querySelector(".weather-information");
+  weatherContainer.style.display = "block";
+  weatherContainer.style.opacity = 1;
 }
 
 function putWeatherIntoHTML(data) {
@@ -132,5 +162,7 @@ document.querySelector("#vmap").addEventListener("click", e => {
       x: e.pageX,
       y: e.pageY
     };
+  } else {
+    hideWeatherData();
   }
 });
