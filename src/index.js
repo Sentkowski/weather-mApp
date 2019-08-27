@@ -95,10 +95,12 @@ function codeToCountry(code) {
 function extractData(weatherObj, code) {
   const city = weatherObj.name;
   const country = codeToCountry(code);
-  const temp = Math.round(weatherObj.main.temp) + "°C";
+  const temp = Math.round(weatherObj.main.temp);
   const desc = weatherObj.weather[0].description;
-  const wind = "wind: " + weatherObj.wind.speed + " m/s";
-  return { city, country, desc, temp, wind };
+  const wind = "wind: " + weatherObj.wind.speed;
+  const timeObj = new Date(Date.now() + weatherObj.timezone * 1000);
+  const time = timeObj.getUTCHours() + ":" + timeObj.getUTCMinutes();
+  return { city, country, desc, temp, wind, time };
 }
 
 function displayWeatherData(data) {
@@ -135,8 +137,11 @@ function putWeatherIntoHTML(data) {
   document.querySelector(".weather-city").textContent = data.city;
   document.querySelector(".weather-country").textContent = data.country;
   document.querySelector(".weather-desc").textContent = data.desc;
-  document.querySelector(".weather-temp").textContent = data.temp;
-  document.querySelector(".weather-wind").textContent = data.wind;
+  document.querySelector(".weather-temp-wrapper").textContent =
+    data.temp + "°C";
+  document.querySelector(".weather-wind").textContent = data.wind + " m/s";
+  document.querySelector(".weather-time").textContent = data.time;
+  setTempColor(data.temp);
 }
 
 function placeOnClick(elem) {
@@ -166,3 +171,13 @@ document.querySelector("#vmap").addEventListener("click", e => {
     hideWeatherData();
   }
 });
+
+function setTempColor(temp) {
+  const hotColor = "hsl(1, 84%, X%)";
+  const coldColor = "hsl(214, 36%, X%)";
+  let tempColor = temp > 10 ? hotColor : coldColor;
+  tempColor = tempColor.replace("X", 100 - Math.abs(10 - temp));
+  document.querySelector(
+    ".weather-temp-decoration"
+  ).style.backgroundColor = tempColor;
+}

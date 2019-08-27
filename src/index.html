@@ -23,20 +23,46 @@
           <h2 class="app-description-heading">
             Curious about the weather in the remotest places?
           </h2>
-          <img
-            src="./weather-icon-set/cloudy-sun.svg"
-            alt=""
-            class="app-description-weather-icon"
-          />
           <p class="app-description-text">
             Click on any country to see what's the weather like in its capital.
           </p>
+          <img
+            src="weather-icon-set/storm.svg"
+            alt=""
+            class="weather-icon weather-icon-1"
+          />
+          <img
+            src="weather-icon-set/windy.svg"
+            alt=""
+            class="weather-icon weather-icon-2"
+          />
+          <img
+            src="weather-icon-set/hidden-sun.svg"
+            alt=""
+            class="weather-icon weather-icon-3"
+          />
+          <img
+            src="weather-icon-set/cloudy-night.svg"
+            alt=""
+            class="weather-icon weather-icon-4"
+          />
+          <img
+            src="weather-icon-set/rainy.svg"
+            alt=""
+            class="weather-icon weather-icon-5"
+          />
         </div>
       </section>
       <section class="weather-information">
-        <p class="weather-country"></p>
+        <div class="city-time-container">
+          <p class="weather-country"></p>
+          <p class="weather-time"></p>
+        </div>
         <h2 class="weather-city"></h2>
-        <p class="weather-temp"></p>
+        <p class="weather-temp">
+          <span class="weather-temp-wrapper"></span>
+          <span class="weather-temp-decoration"></span>
+        </p>
         <h3 class="weather-desc"></h3>
         <p class="weather-wind"></p>
       </section>
