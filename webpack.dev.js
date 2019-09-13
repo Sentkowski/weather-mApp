@@ -14,7 +14,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       filename: "index.html",
-      chunks: ["index"]
+      chunks: ["index"],
+      favicon: "./src/favicon.ico"
     })
   ],
   module: {
@@ -24,7 +25,7 @@ module.exports = {
         use: ["html-loader"]
       },
       {
-        test: /\.(svg|png|jpg|gif)$/,
+        test: /\.(svg|png|jpg|gif|ico)$/,
         use: {
           loader: "file-loader",
           options: {

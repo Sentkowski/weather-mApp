@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -22,6 +22,7 @@ module.exports = {
         template: "./src/index.html",
         filename: "index.html",
         chunks: ["index"],
+        favicon: "./src/favicon.ico",
         minify: {
           collapseWhitespace: true,
           removeComments: true,

@@ -187,8 +187,8 @@ $loop-duration: 20s;
 .error-message {
   position: absolute;
   z-index: 2;
-  left: 0;
-  top: 0;
+  left: -100%;
+  top: -100%;
   opacity: 0;
   transition: opacity 0.1s;
   display: flex;
