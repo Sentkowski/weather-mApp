@@ -12,6 +12,8 @@ let lastMapClick = {
   y: null
 };
 
+const spamCheck = spamProtector();
+
 jQuery(document).ready(function() {
   jQuery("#vmap").vectorMap({
     map: "world_en",
@@ -49,6 +51,7 @@ function intialZoom() {
 
 async function handleRegionSelect(e, code) {
   try {
+    spamCheck();
     const weather = await getWeatherForCapital(code);
     const extracted = extractData(weather, code);
     displayWeatherData(extracted);
@@ -99,7 +102,11 @@ function extractData(weatherObj, code) {
   const desc = weatherObj.weather[0].description;
   const wind = "wind: " + weatherObj.wind.speed;
   const timeObj = new Date(Date.now() + weatherObj.timezone * 1000);
-  const time = timeObj.getUTCHours() + ":" + timeObj.getUTCMinutes();
+  const time =
+    timeObj.getUTCHours() +
+    ":" +
+    (timeObj.getUTCMinutes() < 10 ? "0" : "") +
+    timeObj.getUTCMinutes();
   return { city, country, desc, temp, wind, time };
 }
 
@@ -180,4 +187,14 @@ function setTempColor(temp) {
   document.querySelector(
     ".weather-temp-decoration"
   ).style.backgroundColor = tempColor;
+}
+
+function spamProtector() {
+  let calls = 0;
+  setInterval(() => {
+    calls = 0;
+  }, 60000);
+  return () => {
+    if (calls++ > 19) throw new Error();
+  };
 }

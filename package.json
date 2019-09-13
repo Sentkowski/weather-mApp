@@ -32,6 +32,7 @@
     "jquery.vmap.min.exec.js",
     "jquery.vmap.europe.exec.js",
     "webpack.dev.js",
+    "webpack.prod.js",
     "jquery.vmap.world.exec.js"
   ]
 }
