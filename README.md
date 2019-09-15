@@ -8,3 +8,5 @@ Created with:
 - [JQVMap](https://www.10bestdesign.com/jqvmap/)
 
 Part of [the Odin Project](https://www.theodinproject.com/) curriculum.
+
+Try it [here](https://sentkowski.github.io/weather-mApp/).
